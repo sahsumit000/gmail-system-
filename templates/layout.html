@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Controlled Mail System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>Mail System</h2>
+            </div>
+            <button id="compose-btn" class="btn-compose" onclick="window.location.href='/compose'">📝 Compose</button>
+            <nav class="nav-menu">
+                <a href="/inbox">📥 Inbox</a>
+                <a href="/starred">⭐ Starred</a>
+                <a href="/sent">📤 Sent</a>
+                <a href="/drafts">📄 Drafts</a>
+                <a href="/spam">🚫 Spam</a>
+                <a href="/trash">🗑️ Trash</a>
+            </nav>
+            <div class="divider"></div>
+            <nav class="nav-menu">
+                <a href="/history">🕒 History</a>
+                <a href="/settings">⚙️ Settings</a>
+            </nav>
+            <div class="voice-controls">
+                <button id="mode-toggle-btn" class="btn-secondary" style="width: 100%; margin-bottom: 10px; border-radius: 20px; font-size: 12px; padding: 8px;">Mode: Voice (Auto)</button>
+                <button id="voice-btn" class="voice-btn">🎤 Voice Command</button>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="header">
+                <div class="search-bar">
+                    <form method="GET" action="/inbox" id="search-form">
+                        <input type="text" name="q" placeholder="Search mail..." value="{{ q if q else '' }}" class="search-input">
+                    </form>
+                </div>
+                <div id="transcript-display" class="transcript-display"></div>
+            </header>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/js/app.js"></script>
+    <audio id="audio-player" style="display: none;"></audio>
+</body>
+</html>

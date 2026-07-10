@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div style="padding: 20px;">
+    <h2>Settings</h2>
+    <div style="max-width: 600px;">
+        <div class="form-group">
+            <label>Speech Speed</label>
+            <select class="form-control">
+                <option value="normal">Normal</option>
+                <option value="fast">Fast</option>
+            </select>
+        </div>
+        <button class="btn-primary" onclick="alert('Saved locally!')">Save</button>
+    </div>
+</div>
+{% endblock %}

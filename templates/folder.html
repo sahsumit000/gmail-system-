@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="folder-header">
+    <h2>{{ folder }}</h2>
+    {% if q %}
+    <span class="search-result-text">Search results for "{{ q }}"</span>
+    {% endif %}
+</div>
+<div class="email-list">
+    {% if not emails %}
+        <div class="empty-state">
+            <p>No emails found.</p>
+        </div>
+    {% else %}
+        {% for email in emails %}
+        <div class="email-card {% if not email.read %}unread{% endif %}">
+            <div class="email-card-header">
+                <div class="sender-info">
+                    <span class="sender">{{ email.sender }}</span>
+                    {% if email.labels %}
+                        <span class="labels">{{ email.labels|join(', ') }}</span>
+                    {% endif %}
+                </div>
+                <span class="timestamp">{{ email.timestamp[:10] }}</span>
+            </div>
+            <div class="email-card-body">
+                <span class="subject">{{ email.subject }}</span>
+                <span class="snippet">- {{ email.body[:100] }}...</span>
+            </div>
+            <div class="email-actions">
+                <button class="btn-icon btn-read-aloud" data-text="Subject: {{ email.subject }}. Body: {{ email.body }}" title="Read Aloud">🔊</button>
+                <button class="btn-icon" onclick="updateEmail('{{ email.id }}', {read: {{ 'false' if email.read else 'true' }}})" title="Mark Read/Unread">
+                    {% if email.read %}✉️{% else %}📧{% endif %}
+                </button>
+                <button class="btn-icon" onclick="updateEmail('{{ email.id }}', {starred: {{ 'false' if email.starred else 'true' }}})" title="Star">
+                    {% if email.starred %}⭐{% else %}☆{% endif %}
+                </button>
+                {% if folder == 'Trash' %}
+                <button class="btn-icon restore-btn" onclick="updateEmail('{{ email.id }}', {deleted: false, folder: 'inbox'})" title="Restore">♻️</button>
+                {% else %}
+                <button class="btn-icon delete-btn" onclick="deleteEmail('{{ email.id }}')" title="Delete">🗑️</button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
